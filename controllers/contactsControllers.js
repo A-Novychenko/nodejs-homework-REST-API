@@ -36,6 +36,7 @@ const removeContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
   const {contactId} = req.params;
+
   const result = await contactsService.updateContact(contactId, req.body);
 
   if (!result) {
