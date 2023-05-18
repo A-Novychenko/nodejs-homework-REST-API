@@ -10,7 +10,7 @@ const app = express();
 const {DB_HOST, PORT = 3000} = process.env;
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
-const contactsRouter = require("./routes/api/contacts");
+const contactsRouter = require("./api");
 
 app.use(logger(formatsLogger));
 app.use(cors());

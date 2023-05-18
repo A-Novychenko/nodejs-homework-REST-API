@@ -6,10 +6,10 @@ const {
   addContact,
   removeContact,
   updateContact,
-} = require("../../controllers/contactsControllers");
+} = require("../controller");
 
-const {contactsSchema} = require("../../schemas");
-const {validateBody} = require("../../decorators");
+const {contactsSchema} = require("../schemas");
+const {validateBody} = require("../decorators");
 
 const router = express.Router();
 

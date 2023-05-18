@@ -1,4 +1,4 @@
-const contactsService = require("../models/contacts");
+const contactsService = require("../service");
 const {HttpError} = require("../helpers");
 const {controllerWrapper} = require("../decorators");
 
