@@ -1,7 +1,9 @@
 {
-  "name": "template",
-  "version": "0.0.0",
+  "name": "contacts-app-express",
   "private": true,
+  "version": "0.0.1",
+  "description": "A simple Node contacts app built on top of Express is up and running in no time.",
+  "main": "server.js",
   "engines": {
     "node": ">=14.20.1"
   },

@@ -4,7 +4,7 @@ const listContacts = async () => Contact.find();
 
 const getContactById = async (contactId) => Contact.findById(contactId);
 
-const removeContact = async (contactId) => Contact.findByIdAndDelete(contactId);
+const removeContact = async (contactId) => Contact.findByIdAndRemove(contactId);
 
 const addContact = async (data) => Contact.create(data);
 

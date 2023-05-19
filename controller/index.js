@@ -1,10 +1,15 @@
 const contactsService = require("../service");
-const {HttpError} = require("../helpers");
 const {controllerWrapper} = require("../decorators");
 
 const getAllContacts = async (_, res) => {
   const result = await contactsService.listContacts();
-  res.json(result);
+  res.json({
+    status: "success",
+    code: 200,
+    data: {
+      contacts: result,
+    },
+  });
 };
 
 const getContactById = async (req, res) => {
@@ -12,15 +17,24 @@ const getContactById = async (req, res) => {
   const result = await contactsService.getContactById(contactId);
 
   if (!result) {
-    throw HttpError(404, "Not found");
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: `Not found contsct id: ${contactId}`,
+      data: "Not Found",
+    });
   }
 
-  res.json(result);
+  res.json({
+    status: "success",
+    code: 200,
+    data: {contact: result},
+  });
 };
 
 const addContact = async (req, res) => {
   const result = await contactsService.addContact(req.body);
-  res.status(201).json(result);
+  res.status(201).json({status: "success", code: 201, data: {contact: result}});
 };
 
 const removeContact = async (req, res) => {
@@ -28,10 +42,15 @@ const removeContact = async (req, res) => {
   const result = await contactsService.removeContact(contactId);
 
   if (!result) {
-    throw HttpError(404, "Not found");
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: `Not found contact id: ${contactId}`,
+      data: "Not Found",
+    });
   }
 
-  res.json({message: "contact deleted"});
+  res.json({status: "success", code: 200, data: {contact: result}});
 };
 
 const updateContact = async (req, res) => {
@@ -40,10 +59,19 @@ const updateContact = async (req, res) => {
   const result = await contactsService.updateContact(contactId, req.body);
 
   if (!result) {
-    throw HttpError(404, "Not found");
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: `Not found contact id: ${contactId}`,
+      data: "Not Found",
+    });
   }
 
-  res.json(result);
+  res.json({
+    status: "success",
+    code: 200,
+    data: {contact: result},
+  });
 };
 
 module.exports = {

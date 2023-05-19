@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 
 const {
   getAllContacts,
@@ -10,8 +11,6 @@ const {
 
 const {contactsSchema} = require("../schemas");
 const {validateBody} = require("../decorators");
-
-const router = express.Router();
 
 router.get("/contacts/", getAllContacts);
 
