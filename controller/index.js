@@ -74,8 +74,19 @@ const updateContact = async (req, res) => {
   });
 };
 
-const updateStatus = async (req, res) => {
+const updateStatusContact = async (req, res) => {
   const {contactId} = req.params;
+  console.log("req.body", req.body.favorite);
+
+  if (req.body.favorite === undefined) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "missing field favorite",
+      data: "Not Found",
+    });
+  }
+
   const {favorite = false} = req.body;
 
   const result = await contactsService.updateContact(contactId, {favorite});
@@ -102,5 +113,5 @@ module.exports = {
   addContact: controllerWrapper(addContact),
   removeContact: controllerWrapper(removeContact),
   updateContact: controllerWrapper(updateContact),
-  updateStatus: controllerWrapper(updateStatus),
+  updateStatusContact: controllerWrapper(updateStatusContact),
 };

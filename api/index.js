@@ -7,7 +7,7 @@ const {
   addContact,
   removeContact,
   updateContact,
-  updateStatus,
+  updateStatusContact,
 } = require("../controller");
 
 const {contactsSchema} = require("../schemas");
@@ -25,8 +25,8 @@ router.put("/contacts/:contactId", validateBody(contactsSchema), updateContact);
 
 router.patch(
   "/contacts/:contactId",
-  validateBody(contactsSchema),
-  updateStatus
+  // validateBody(contactsSchema),
+  updateStatusContact
 );
 
 module.exports = router;
