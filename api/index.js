@@ -13,14 +13,14 @@ const {validateBody} = require("../decorators");
 
 const router = express.Router();
 
-router.get("/", getAllContacts);
+router.get("/contacts/", getAllContacts);
 
-router.get("/:contactId", getContactById);
+router.get("/contacts/:contactId", getContactById);
 
-router.post("/", validateBody(contactsSchema), addContact);
+router.post("/contacts/", validateBody(contactsSchema), addContact);
 
-router.delete("/:contactId", removeContact);
+router.delete("/contacts/:contactId", removeContact);
 
-router.put("/:contactId", validateBody(contactsSchema), updateContact);
+router.put("/contacts/:contactId", validateBody(contactsSchema), updateContact);
 
 module.exports = router;
