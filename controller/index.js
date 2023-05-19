@@ -14,13 +14,23 @@ const getAllContacts = async (_, res) => {
 
 const getContactById = async (req, res) => {
   const {contactId} = req.params;
+
+  if (contactId.length !== 24) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "Bad Request, wrong ID",
+      data: "Not Found",
+    });
+  }
+
   const result = await contactsService.getContactById(contactId);
 
   if (!result) {
     return res.status(404).json({
       status: "error",
       code: 404,
-      message: `Not found contsct id: ${contactId}`,
+      message: `Not found contacts id: ${contactId}`,
       data: "Not Found",
     });
   }
@@ -39,6 +49,16 @@ const addContact = async (req, res) => {
 
 const removeContact = async (req, res) => {
   const {contactId} = req.params;
+
+  if (contactId.length !== 24) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "Bad Request, wrong ID",
+      data: "Not Found",
+    });
+  }
+
   const result = await contactsService.removeContact(contactId);
 
   if (!result) {
@@ -55,6 +75,15 @@ const removeContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
   const {contactId} = req.params;
+
+  if (contactId.length !== 24) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "Bad Request, wrong ID",
+      data: "Not Found",
+    });
+  }
 
   const result = await contactsService.updateContact(contactId, req.body);
 
@@ -76,7 +105,15 @@ const updateContact = async (req, res) => {
 
 const updateStatusContact = async (req, res) => {
   const {contactId} = req.params;
-  console.log("req.body", req.body.favorite);
+
+  if (contactId.length !== 24) {
+    return res.status(400).json({
+      status: "error",
+      code: 400,
+      message: "Bad Request, wrong ID",
+      data: "Not Found",
+    });
+  }
 
   if (req.body.favorite === undefined) {
     return res.status(400).json({

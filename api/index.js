@@ -23,10 +23,6 @@ router.delete("/contacts/:contactId", removeContact);
 
 router.put("/contacts/:contactId", validateBody(contactsSchema), updateContact);
 
-router.patch(
-  "/contacts/:contactId",
-  // validateBody(contactsSchema),
-  updateStatusContact
-);
+router.patch("/contacts/:contactId", updateStatusContact);
 
 module.exports = router;
