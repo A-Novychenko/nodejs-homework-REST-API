@@ -74,10 +74,33 @@ const updateContact = async (req, res) => {
   });
 };
 
+const updateStatus = async (req, res) => {
+  const {contactId} = req.params;
+  const {favorite = false} = req.body;
+
+  const result = await contactsService.updateContact(contactId, {favorite});
+
+  if (!result) {
+    return res.status(404).json({
+      status: "error",
+      code: 404,
+      message: `Not found contact id: ${contactId}`,
+      data: "Not Found",
+    });
+  }
+
+  res.json({
+    status: "success",
+    code: 200,
+    data: {contact: result},
+  });
+};
+
 module.exports = {
   getAllContacts: controllerWrapper(getAllContacts),
   getContactById: controllerWrapper(getContactById),
   addContact: controllerWrapper(addContact),
   removeContact: controllerWrapper(removeContact),
   updateContact: controllerWrapper(updateContact),
+  updateStatus: controllerWrapper(updateStatus),
 };

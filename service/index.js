@@ -6,10 +6,10 @@ const getContactById = async (contactId) => Contact.findById(contactId);
 
 const removeContact = async (contactId) => Contact.findByIdAndRemove(contactId);
 
-const addContact = async (data) => Contact.create(data);
+const addContact = async (fields) => Contact.create(fields);
 
-const updateContact = async (contactId, data) =>
-  Contact.findByIdAndUpdate(contactId, data, {new: true});
+const updateContact = async (contactId, fields) =>
+  Contact.findByIdAndUpdate(contactId, fields, {new: true});
 
 module.exports = {
   listContacts,
