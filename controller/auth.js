@@ -3,16 +3,22 @@ const {controllerWrapper} = require("../helpers");
 const {HttpError} = require("../helpers");
 
 const register = async (req, res) => {
-  const result = await User.create(req.body);
+  const {email} = req.body;
+  const user = await User.findOne({email});
+  if (user) {
+    throw HttpError(409, "Email in use");
+  }
 
-  if (!result) {
-    return HttpError(400, "test!!!!!!!!!!!!!!!!!!!!!!!!");
+  const newUser = await User.create(req.body);
+
+  if (!newUser) {
+    throw HttpError(400, "test!!!!!!!!!!!!!!!!!!!!!!!!");
   }
 
   res.status(201).json({
     status: "Created",
     code: 201,
-    data: {email: result.email, subscription: result.subscription},
+    data: {email: newUser.email, subscription: newUser.subscription},
   });
 };
 
