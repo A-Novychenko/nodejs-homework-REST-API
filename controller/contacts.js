@@ -1,9 +1,9 @@
-const contactsService = require("../service");
 const {controllerWrapper} = require("../helpers");
 const {HttpError} = require("../helpers");
+const {Contact} = require("../models/contact");
 
 const getAllContacts = async (_, res) => {
-  const result = await contactsService.listContacts();
+  const result = await Contact.find();
   res.json({
     status: "success",
     code: 200,
@@ -16,7 +16,7 @@ const getAllContacts = async (_, res) => {
 const getContactById = async (req, res) => {
   const {contactId} = req.params;
 
-  const result = await contactsService.getContactById(contactId);
+  const result = await Contact.findById(contactId);
 
   if (!result) {
     throw HttpError(404, `Not found contacts id: ${contactId}`);
@@ -30,14 +30,14 @@ const getContactById = async (req, res) => {
 };
 
 const addContact = async (req, res) => {
-  const result = await contactsService.addContact(req.body);
+  const result = await Contact.create(req.body);
   res.status(201).json({status: "success", code: 201, data: {contact: result}});
 };
 
 const removeContact = async (req, res) => {
   const {contactId} = req.params;
 
-  const result = await contactsService.removeContact(contactId);
+  const result = await Contact.findByIdAndRemove(contactId);
 
   if (!result) {
     throw HttpError(404, `Not found contacts id: ${contactId}`);
@@ -49,7 +49,9 @@ const removeContact = async (req, res) => {
 const updateContact = async (req, res) => {
   const {contactId} = req.params;
 
-  const result = await contactsService.updateContact(contactId, req.body);
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
   if (!result) {
     throw HttpError(404, `Not found contacts id: ${contactId}`);
   }
@@ -64,7 +66,9 @@ const updateContact = async (req, res) => {
 const updateStatusContact = async (req, res) => {
   const {contactId} = req.params;
 
-  const result = await contactsService.updateContact(contactId, req.body);
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
 
   if (!result) {
     throw HttpError(404, `Not found contacts id: ${contactId}`);
