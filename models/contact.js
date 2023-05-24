@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const {Schema, model} = require("mongoose");
 const Joi = require("joi");
 const {handleMongooseError} = require("../helpers");
 
@@ -18,6 +17,10 @@ const contactMongooseSchema = new Schema(
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
   },
   {versionKey: false}
@@ -56,6 +59,6 @@ const schemas = {
   updateStatusContactSchema,
 };
 
-const Contact = mongoose.model("contact", contactMongooseSchema);
+const Contact = model("contact", contactMongooseSchema);
 
 module.exports = {schemas, Contact};
