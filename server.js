@@ -27,13 +27,19 @@ app.use((_, res, __) => {
   });
 });
 
-app.use((err, _, res, __) => {
-  console.log(err.stack);
-  res.status(500).json({
-    status: "fail",
-    code: 500,
-    message: err.message,
-    data: "Internal Server Error",
+const {createErrorReq} = require("./helpers");
+app.use((err, req, res, next) => {
+  const {status = 500, message = "Server error"} = err;
+  const {statusText, codeErr, messageDescr, dataDescr} = createErrorReq(
+    status,
+    message
+  );
+
+  res.status(status).json({
+    status: statusText,
+    code: codeErr,
+    message: messageDescr,
+    data: dataDescr,
   });
 });
 

@@ -1,5 +1,6 @@
 const contactsService = require("../service");
-const {controllerWrapper} = require("../decorators");
+const {controllerWrapper} = require("../helpers");
+const {HttpError} = require("../helpers");
 
 const getAllContacts = async (_, res) => {
   const result = await contactsService.listContacts();
@@ -15,24 +16,10 @@ const getAllContacts = async (_, res) => {
 const getContactById = async (req, res) => {
   const {contactId} = req.params;
 
-  if (contactId.length !== 24) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "Bad Request, wrong ID",
-      data: "Not Found",
-    });
-  }
-
   const result = await contactsService.getContactById(contactId);
 
   if (!result) {
-    return res.status(404).json({
-      status: "error",
-      code: 404,
-      message: `Not found contacts id: ${contactId}`,
-      data: "Not Found",
-    });
+    throw HttpError(404, `Not found contacts id: ${contactId}`);
   }
 
   res.json({
@@ -50,24 +37,10 @@ const addContact = async (req, res) => {
 const removeContact = async (req, res) => {
   const {contactId} = req.params;
 
-  if (contactId.length !== 24) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "Bad Request, wrong ID",
-      data: "Not Found",
-    });
-  }
-
   const result = await contactsService.removeContact(contactId);
 
   if (!result) {
-    return res.status(404).json({
-      status: "error",
-      code: 404,
-      message: `Not found contact id: ${contactId}`,
-      data: "Not Found",
-    });
+    throw HttpError(404, `Not found contacts id: ${contactId}`);
   }
 
   res.json({status: "success", code: 200, data: {contact: result}});
@@ -76,24 +49,9 @@ const removeContact = async (req, res) => {
 const updateContact = async (req, res) => {
   const {contactId} = req.params;
 
-  if (contactId.length !== 24) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "Bad Request, wrong ID",
-      data: "Not Found",
-    });
-  }
-
   const result = await contactsService.updateContact(contactId, req.body);
-
   if (!result) {
-    return res.status(404).json({
-      status: "error",
-      code: 404,
-      message: `Not found contact id: ${contactId}`,
-      data: "Not Found",
-    });
+    throw HttpError(404, `Not found contacts id: ${contactId}`);
   }
 
   res.json({
@@ -106,35 +64,10 @@ const updateContact = async (req, res) => {
 const updateStatusContact = async (req, res) => {
   const {contactId} = req.params;
 
-  if (contactId.length !== 24) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "Bad Request, wrong ID",
-      data: "Not Found",
-    });
-  }
-
-  if (req.body.favorite === undefined) {
-    return res.status(400).json({
-      status: "error",
-      code: 400,
-      message: "missing field favorite",
-      data: "Not Found",
-    });
-  }
-
-  const {favorite = false} = req.body;
-
-  const result = await contactsService.updateContact(contactId, {favorite});
+  const result = await contactsService.updateContact(contactId, req.body);
 
   if (!result) {
-    return res.status(404).json({
-      status: "error",
-      code: 404,
-      message: `Not found contact id: ${contactId}`,
-      data: "Not Found",
-    });
+    throw HttpError(404, `Not found contacts id: ${contactId}`);
   }
 
   res.json({

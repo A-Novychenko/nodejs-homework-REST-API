@@ -1,7 +1,7 @@
-const controllerWrapper = require("./controllerWrapper");
 const validateBody = require("./validateBody");
+const isValidId = require("./isValidId");
 
 module.exports = {
-  controllerWrapper,
   validateBody,
+  isValidId,
 };
