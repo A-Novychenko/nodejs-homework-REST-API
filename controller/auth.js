@@ -75,9 +75,28 @@ const logout = async (req, res) => {
   res.status(204).end();
 };
 
+const updateSubscription = async (req, res) => {
+  const {subscription} = req.body;
+  const {_id} = req.user;
+  const result = await User.findByIdAndUpdate(
+    _id,
+    {subscription},
+    {
+      new: true,
+    }
+  );
+
+  res.json({
+    status: "success",
+    code: 200,
+    data: {contact: result},
+  });
+};
+
 module.exports = {
   register: controllerWrapper(register),
   login: controllerWrapper(login),
   getCurrent: controllerWrapper(getCurrent),
   logout: controllerWrapper(logout),
+  updateSubscription: controllerWrapper(updateSubscription),
 };

@@ -44,8 +44,8 @@ const getContactById = async (req, res) => {
 
 const addContact = async (req, res) => {
   const {email, phone} = req.body;
-  const {_id: id} = req.user;
 
+  const {_id: id} = req.user;
   const emailIsOnTheList = await Contact.findOne({email});
   const contactIsOnTheList = await Contact.findOne({phone});
 
