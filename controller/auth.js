@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
 const {User} = require("../models/user");
 const {controllerWrapper} = require("../helpers");
 const {HttpError} = require("../helpers");
@@ -15,7 +16,13 @@ const register = async (req, res) => {
     throw HttpError(409, "Email in use");
   }
 
-  const newUser = await User.create({...req.body, password: hashPassword});
+  const avatarUrlDefault = gravatar.url(email);
+  console.log("avatarUrlDefault", avatarUrlDefault);
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    avatarURL: avatarUrlDefault,
+  });
 
   res.status(201).json({
     status: "Created",
