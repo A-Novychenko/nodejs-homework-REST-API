@@ -17,7 +17,7 @@ const register = async (req, res) => {
   }
 
   const avatarUrlDefault = gravatar.url(email);
-  console.log("avatarUrlDefault", avatarUrlDefault);
+
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
