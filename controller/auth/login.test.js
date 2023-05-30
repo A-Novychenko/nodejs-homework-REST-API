@@ -1,6 +1,5 @@
-// ответ должен иметь статус-код 201 !!!  ------- ГОТОВО
-
-// *** нужно проверить что возвращается при рег...
+// ответ должен иметь статус-код 200 ---ГОТОВО
+// в ответе должен возвращаться токен
 // в ответе должен возвращаться объект user с 2 полями email и subscription, имеющие тип данных String
 
 const express = require("express");
@@ -10,14 +9,14 @@ require("dotenv").config();
 
 const {DB_HOST, PORT = 3000} = process.env;
 
-const register = require("./register");
+const login = require("./login");
 
 const app = express();
 const server = app.listen(PORT);
 
 app.use(express.json());
 
-app.post("/api/register", register);
+app.post("/api/login", login);
 
 describe("test register controller", function () {
   beforeAll(async () => {
@@ -30,14 +29,13 @@ describe("test register controller", function () {
     server.close();
   });
 
-  it("test register controller", async () => {
+  it("response has status code 200", async () => {
     await request(app)
-      .post("/api/register")
+      .post("/api/login")
       .send({
         email: "TEST@example.com",
         password: "examplepassword",
       })
-
-      .expect(201);
+      .expect(200);
   });
 });
