@@ -4,6 +4,8 @@ const {validateBody, authenticate, upload} = require("../../middlewares");
 const {schemas} = require("../../models/user");
 const {
   register,
+  verifyEmail,
+  resendVerifyEmail,
   login,
   getCurrent,
   logout,
@@ -12,6 +14,12 @@ const {
 } = require("../../controller/auth");
 
 router.post("/register", validateBody(schemas.registerSchema), register);
+router.get("/verify/:verificationCode", verifyEmail);
+router.post(
+  "/verify",
+  validateBody(schemas.verifyEmailSchema),
+  resendVerifyEmail
+);
 router.post("/login", validateBody(schemas.loginSchema), login);
 router.get("/current", authenticate, getCurrent);
 router.get("/logout", authenticate, logout);

@@ -33,8 +33,8 @@ const register = async (req, res) => {
   const verifyEmail = {
     to: "novychenkoae@gmail.com",
     from: "goit-hw6-mailer@meta.ua",
-    subject: "Test email",
-    html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
+    subject: "Verify  email",
+    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationCode}">Click verify email</a>`,
   };
 
   await metaSendMailer.sendMail(verifyEmail);
