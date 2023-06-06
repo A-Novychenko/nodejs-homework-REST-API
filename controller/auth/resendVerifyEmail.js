@@ -2,7 +2,7 @@ const {User} = require("../..//models/user");
 
 const {HttpError} = require("../..//helpers");
 
-const {transport: metaSendMailer} = require("../../helpers");
+const {sendEmail} = require("../../helpers");
 const {BASE_URL} = process.env;
 
 const resendVerifyEmail = async (req, res) => {
@@ -18,13 +18,12 @@ const resendVerifyEmail = async (req, res) => {
   }
 
   const verifyEmail = {
-    to: "novychenkoae@gmail.com",
-    from: "goit-hw6-mailer@meta.ua",
+    to: email,
     subject: "Verify  email",
-    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${user.verificationCode}">Click verify email</a>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${user.verificationToken}">Click verify email</a>`,
   };
 
-  await metaSendMailer.sendMail(verifyEmail);
+  await sendEmail(verifyEmail);
 
   res.json({
     status: "OK",

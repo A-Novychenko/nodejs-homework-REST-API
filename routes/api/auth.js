@@ -14,7 +14,7 @@ const {
 } = require("../../controller/auth");
 
 router.post("/register", validateBody(schemas.registerSchema), register);
-router.get("/verify/:verificationCode", verifyEmail);
+router.get("/verify/:verificationToken", verifyEmail);
 router.post(
   "/verify",
   validateBody(schemas.verifyEmailSchema),

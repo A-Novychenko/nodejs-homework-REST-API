@@ -1,19 +1,23 @@
 const nodemailer = require("nodemailer");
 
-require("dotenv").config();
-
-const {MAILER_PASS} = process.env;
+const {UKR_NET_EMAIL, UKR_NET_PASSWORD} = process.env;
 
 const nodemailerConfig = {
-  host: "smtp.meta.ua",
+  host: "smtp.ukr.net",
   port: 465,
   secure: true,
   auth: {
-    user: "goit-hw6-mailer@meta.ua",
-    pass: MAILER_PASS,
+    user: UKR_NET_EMAIL,
+    pass: UKR_NET_PASSWORD,
   },
 };
 
 const transport = nodemailer.createTransport(nodemailerConfig);
 
-module.exports = transport;
+const sendEmail = async (data) => {
+  const email = {...data, from: UKR_NET_EMAIL};
+  await transport.sendMail(email);
+  return true;
+};
+
+module.exports = sendEmail;

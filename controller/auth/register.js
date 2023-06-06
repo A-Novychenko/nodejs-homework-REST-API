@@ -6,7 +6,7 @@ const {HttpError} = require("../..//helpers");
 
 const {User} = require("../../models/user");
 
-const {transport: metaSendMailer} = require("../../helpers");
+const {sendEmail} = require("../../helpers");
 
 const {BASE_URL} = process.env;
 
@@ -21,23 +21,22 @@ const register = async (req, res) => {
   }
 
   const avatarURLDefault = gravatar.url(email);
-  const verificationCode = nanoid();
+  const verificationToken = nanoid();
 
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL: avatarURLDefault,
-    verificationCode,
+    verificationToken,
   });
 
   const verifyEmail = {
-    to: "novychenkoae@gmail.com",
-    from: "goit-hw6-mailer@meta.ua",
+    to: email,
     subject: "Verify  email",
-    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationCode}">Click verify email</a>`,
+    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`,
   };
 
-  await metaSendMailer.sendMail(verifyEmail);
+  await sendEmail(verifyEmail);
 
   res.status(201).json({
     status: "Created",
